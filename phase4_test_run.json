@@ -1,0 +1,360 @@
+[
+  {
+    "area": "Tenderloin",
+    "payload": {
+      "scope": {
+        "type": "neighborhood",
+        "name": "Tenderloin"
+      },
+      "window_days": 30,
+      "total_cases": 4685,
+      "open": 528,
+      "closed": 4157,
+      "status_breakdown": {
+        "Closed": 4157,
+        "Open": 528
+      },
+      "pct_closed": 88.7,
+      "median_days_to_fix": 0.5,
+      "top_issues": [
+        {
+          "issue": "Street and Sidewalk Cleaning",
+          "count": 2791
+        },
+        {
+          "issue": "Encampment",
+          "count": 388
+        },
+        {
+          "issue": "General Request",
+          "count": 329
+        },
+        {
+          "issue": "Parking Enforcement",
+          "count": 225
+        },
+        {
+          "issue": "Graffiti Private",
+          "count": 142
+        }
+      ],
+      "recent_cases": [
+        {
+          "requested": "2026-11-02T23:13:34",
+          "issue": "General Request",
+          "subtype": "homelessness_and_supportive_housing",
+          "status": "Open",
+          "address": "108 Cedar St",
+          "notes": "open"
+        },
+        {
+          "requested": "2026-11-02T22:33:48",
+          "issue": "Street and Sidewalk Cleaning",
+          "subtype": "garbage_and_debris",
+          "status": "Open",
+          "address": "9 Olive St",
+          "notes": "open"
+        },
+        {
+          "requested": "2026-11-02T22:31:49",
+          "issue": "Street and Sidewalk Cleaning",
+          "subtype": "garbage_and_debris",
+          "status": "Open",
+          "address": "17 Olive St",
+          "notes": "open"
+        },
+        {
+          "requested": "2026-11-02T22:31:48",
+          "issue": "Street and Sidewalk Cleaning",
+          "subtype": "garbage_and_debris",
+          "status": "Open",
+          "address": "729 Larkin St",
+          "notes": "open"
+        },
+        {
+          "requested": "2026-11-02T19:52:51",
+          "issue": "Graffiti Private",
+          "subtype": "not_offensive",
+          "status": "Open",
+          "address": "50 Cedar St",
+          "notes": "open"
+        }
+      ],
+      "area": "Tenderloin",
+      "slowest_cases": "The slowest 10% of closed cases took more than 4.0 days",
+      "pct_open": 11.3,
+      "typical_fix": "Half of closed cases were fixed within 0.5 days"
+    },
+    "summary": "In the Tenderloin neighborhood over the past 30 days, the most common issue reported to 311 was street and sidewalk cleaning, with 2791 cases. Most issues are resolved quickly, as the median time to fix a case is 0.5 days. Currently, 11.3% of cases remain open, meaning 528 issues are still unresolved. Notably, four of the five most recent examples involve street and sidewalk cleaning related to garbage and debris, all of which are still open. The slowest 10% of closed cases took more than 4.0 days to resolve.",
+    "flagged": []
+  },
+  {
+    "area": "Mission",
+    "payload": {
+      "scope": {
+        "type": "neighborhood",
+        "name": "Mission"
+      },
+      "window_days": 30,
+      "total_cases": 12170,
+      "open": 1855,
+      "closed": 10315,
+      "status_breakdown": {
+        "Closed": 10315,
+        "Open": 1855
+      },
+      "pct_closed": 84.8,
+      "median_days_to_fix": 0.4,
+      "top_issues": [
+        {
+          "issue": "Street and Sidewalk Cleaning",
+          "count": 5670
+        },
+        {
+          "issue": "Parking Enforcement",
+          "count": 2076
+        },
+        {
+          "issue": "Graffiti Public",
+          "count": 923
+        },
+        {
+          "issue": "General Request",
+          "count": 792
+        },
+        {
+          "issue": "Encampment",
+          "count": 716
+        }
+      ],
+      "recent_cases": [
+        {
+          "requested": "2026-11-02T23:45:50",
+          "issue": "Noise",
+          "subtype": "other_excessive_noise",
+          "status": "Open",
+          "address": "2925 20Th St",
+          "notes": "open"
+        },
+        {
+          "requested": "2026-11-02T23:44:15",
+          "issue": "Street and Sidewalk Cleaning",
+          "subtype": "garbage_and_debris",
+          "status": "Open",
+          "address": "344 South Van Ness Ave",
+          "notes": "new"
+        },
+        {
+          "requested": "2026-11-02T23:02:13",
+          "issue": "Street and Sidewalk Cleaning",
+          "subtype": "garbage_and_debris",
+          "status": "Open",
+          "address": "3464 19Th St",
+          "notes": "in progress"
+        },
+        {
+          "requested": "2026-11-02T22:48:30",
+          "issue": "Noise",
+          "subtype": "other_excessive_noise",
+          "status": "Open",
+          "address": "2687 Harrison St",
+          "notes": "open"
+        },
+        {
+          "requested": "2026-11-02T22:37:45",
+          "issue": "Parking Enforcement",
+          "subtype": "other_illegal_parking",
+          "status": "Open",
+          "address": "3133 16Th St",
+          "notes": "accepted"
+        }
+      ],
+      "area": "Mission",
+      "slowest_cases": "The slowest 10% of closed cases took more than 4.2 days",
+      "pct_open": 15.2,
+      "typical_fix": "Half of closed cases were fixed within 0.4 days"
+    },
+    "summary": "In the Mission neighborhood, the most common issue reported to 311 over the past 30 days was street and sidewalk cleaning, with 5670 cases. The median time to fix an issue was 0.4 days, meaning half of all closed cases were resolved within that time. Currently, 15.2% of cases remain open, totaling 1855 unresolved reports. Notably, the slowest 10% of closed cases took more than 4.2 days to resolve, which is significantly longer than the typical fix time. Recent examples include open reports for noise and illegal parking, as well as new and in-progress cleaning requests.",
+    "flagged": []
+  },
+  {
+    "area": "Sunset/Parkside",
+    "payload": {
+      "scope": {
+        "type": "neighborhood",
+        "name": "Sunset/Parkside"
+      },
+      "window_days": 30,
+      "total_cases": 2716,
+      "open": 414,
+      "closed": 2302,
+      "status_breakdown": {
+        "Closed": 2302,
+        "Open": 414
+      },
+      "pct_closed": 84.8,
+      "median_days_to_fix": 0.2,
+      "top_issues": [
+        {
+          "issue": "Parking Enforcement",
+          "count": 963
+        },
+        {
+          "issue": "Street and Sidewalk Cleaning",
+          "count": 751
+        },
+        {
+          "issue": "General Request",
+          "count": 195
+        },
+        {
+          "issue": "Graffiti Public",
+          "count": 106
+        },
+        {
+          "issue": "Tree Maintenance",
+          "count": 85
+        }
+      ],
+      "recent_cases": [
+        {
+          "requested": "2026-11-02T23:54:09",
+          "issue": "Parking Enforcement",
+          "subtype": "blocking_driveway_cite_only",
+          "status": "Open",
+          "address": "1954 Sloat Blvd",
+          "notes": "accepted"
+        },
+        {
+          "requested": "2026-11-02T23:29:19",
+          "issue": "Parking Enforcement",
+          "subtype": "parking_on_sidewalk",
+          "status": "Open",
+          "address": "3832 Lawton St",
+          "notes": "accepted"
+        },
+        {
+          "requested": "2026-11-02T23:08:33",
+          "issue": "Parking Enforcement",
+          "subtype": "blocking_driveway_cite_only",
+          "status": "Open",
+          "address": "1365 19Th Ave",
+          "notes": "accepted"
+        },
+        {
+          "requested": "2026-11-02T22:28:49",
+          "issue": "Graffiti Public",
+          "subtype": "not_offensive",
+          "status": "Open",
+          "address": "2397 Sunset Blvd",
+          "notes": "accepted"
+        },
+        {
+          "requested": "2026-11-02T22:28:48",
+          "issue": "Graffiti Public",
+          "subtype": "not_offensive",
+          "status": "Open",
+          "address": "2397 Sunset Blvd",
+          "notes": "accepted"
+        }
+      ],
+      "area": "Sunset/Parkside",
+      "slowest_cases": "The slowest 10% of closed cases took more than 3.7 days",
+      "pct_open": 15.2,
+      "typical_fix": "Half of closed cases were fixed within 0.2 days"
+    },
+    "summary": "In Sunset/Parkside, the most common issues reported over the past 30 days were parking enforcement, with 963 cases, followed by street and sidewalk cleaning at 751. The median time to fix an issue was 0.2 days, meaning half of all closed cases were resolved within that time. Currently, 15.2% of cases remain open, while 84.8% have been closed. Notably, the slowest 10% of closed cases took more than 3.7 days to resolve, and recent examples include multiple parking enforcement issues and graffiti reports at the same address.",
+    "flagged": []
+  },
+  {
+    "area": "500 m around 9 Olive St",
+    "payload": {
+      "scope": {
+        "type": "radius",
+        "lat": 37.78459683,
+        "lon": -122.41803808,
+        "radius": "500m"
+      },
+      "window_days": 30,
+      "total_cases": 4572,
+      "open": 579,
+      "closed": 3993,
+      "status_breakdown": {
+        "Closed": 3993,
+        "Open": 579
+      },
+      "pct_closed": 87.3,
+      "median_days_to_fix": 0.5,
+      "top_issues": [
+        {
+          "issue": "Street and Sidewalk Cleaning",
+          "count": 2666
+        },
+        {
+          "issue": "Encampment",
+          "count": 415
+        },
+        {
+          "issue": "Parking Enforcement",
+          "count": 306
+        },
+        {
+          "issue": "General Request",
+          "count": 301
+        },
+        {
+          "issue": "Graffiti Private",
+          "count": 162
+        }
+      ],
+      "recent_cases": [
+        {
+          "requested": "2026-11-02T23:13:34",
+          "issue": "General Request",
+          "subtype": "homelessness_and_supportive_housing",
+          "status": "Open",
+          "address": "108 Cedar St",
+          "notes": "open"
+        },
+        {
+          "requested": "2026-11-02T22:33:48",
+          "issue": "Street and Sidewalk Cleaning",
+          "subtype": "garbage_and_debris",
+          "status": "Open",
+          "address": "9 Olive St",
+          "notes": "open"
+        },
+        {
+          "requested": "2026-11-02T22:31:49",
+          "issue": "Street and Sidewalk Cleaning",
+          "subtype": "garbage_and_debris",
+          "status": "Open",
+          "address": "17 Olive St",
+          "notes": "open"
+        },
+        {
+          "requested": "2026-11-02T22:31:48",
+          "issue": "Street and Sidewalk Cleaning",
+          "subtype": "garbage_and_debris",
+          "status": "Open",
+          "address": "729 Larkin St",
+          "notes": "open"
+        },
+        {
+          "requested": "2026-11-02T20:25:28",
+          "issue": "Streetlights",
+          "subtype": "light",
+          "status": "Open",
+          "address": "1033 Larkin St",
+          "notes": "open"
+        }
+      ],
+      "area": "500 m around 9 Olive St",
+      "slowest_cases": "The slowest 10% of closed cases took more than 4.0 days",
+      "pct_open": 12.7,
+      "typical_fix": "Half of closed cases were fixed within 0.5 days"
+    },
+    "summary": "In this 500-meter area around 9 Olive St, the most common issue reported over the past 30 days was street and sidewalk cleaning, with 2666 cases. Most issues were resolved quickly, as the median time to fix a problem was 0.5 days. There were 579 open cases, which is 12.7% of the total, while 87.3% of cases were closed. Notably, four of the five most recent requests were for street and sidewalk cleaning related to garbage and debris.",
+    "flagged": []
+  }
+]

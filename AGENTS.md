@@ -10,7 +10,9 @@ The team's [Google Doc](https://docs.google.com/document/d/1bNgqXvLrVUD0cKjE_3u9
 
 SaFe groups reports about the same neighborhood problem in San Francisco. Mistral classifies text and helps confirm matches. Elasticsearch retrieves nearby issues and stores their report history. At 10 reports, generate one consolidated agency email draft. Once an issue is resolved, generate a notice for each subscribed reporter.
 
-Build a working Python backend demonstrated through a notebook, script, or Kibana. Keep classification, geo matching, and threshold escalation as the core. A polished UI, photo verification, gamification, neighborhood ranking, meetups, and additional social feeds are outside the MVP.
+Build a working Python backend demonstrated through a notebook, script, or Kibana. Keep classification, geo matching, and threshold escalation as the core. Photo verification, gamification, neighborhood ranking, meetups, and additional social feeds are outside the MVP.
+
+**November 3 scope update:** The user explicitly requested a proper UI for Person B. A focused local Mistral workspace in ui_server.py and web/ is now in scope alongside mistral_ai.py. This does not add ownership of Person A's storage or Person C's shared pipeline. Live calls and illustrative sample previews must be clearly distinguished.
 
 Generate or print email drafts and resolution notices only. Real email delivery and SF311 submission are future integrations. In resident-facing demo copy, describe drafts accurately; never claim that a city agency received an unsent email.
 
@@ -98,6 +100,8 @@ Create a dedicated `issues` index; treat the existing `sf311` index as read-only
 ## Mistral behavior
 
 The doc proposes `mistral-small-latest` and JSON object responses. Make the model configurable and verify the installed SDK's current API when implementing; keep credentials in environment variables.
+
+Person B currently calls the official chat completions REST API using Python's standard library, so no SDK is installed. Configuration is MISTRAL_API_KEY, MISTRAL_MODEL (default mistral-small-latest), and MISTRAL_TIMEOUT_SECONDS (default 30, range 1–120). The local UI server loads these from an ignored .env file; direct module callers supply process environment variables. Missing or invalid provider output raises MistralError, ambiguous reports raise ClarificationNeeded, and invalid caller data raises ValueError. Draft input requires timezone-aware created_at and updated_at; resolution drafts require status resolved.
 
 - Validate category, nonempty summary, and integer severity 1–5 after classification. JSON formatting alone is not schema validation.
 - Treat vague input as needing clarification; do not invent a location, specific incident, agency, or severity justification.

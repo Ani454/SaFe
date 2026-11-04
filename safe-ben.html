@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SaFe</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+:root{--bg:#f6f1e3;--ink:#1f2a1f;--green:#3fc251;--green-dk:#2a8a37;--orange:#ff8c42;--red:#ff5a5f;--yellow:#ffd23f;--blue:#4aa3ff;--purple:#8b5cf6;--card:#fff;--shadow:0 5px 0 rgba(31,42,31,.18)}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;font-family:Fredoka,system-ui,sans-serif;color:var(--ink);background:var(--bg)}
+button{font-family:inherit;cursor:pointer}
+.hidden{display:none!important}
+
+/* ---------- poster ---------- */
+#poster{position:fixed;inset:0;z-index:5000;background:
+ repeating-linear-gradient(45deg,rgba(255,255,255,.18) 0 18px,transparent 18px 36px),linear-gradient(160deg,#ffd23f,#ff8c42 60%,#ff5a5f);display:flex;align-items:center;justify-content:center;padding:40px}
+.poster-inner{background:var(--card);border:5px solid var(--ink);border-radius:28px;box-shadow:12px 12px 0 var(--ink);max-width:880px;width:100%;padding:44px 52px;text-align:center;position:relative}
+.stamp{position:absolute;top:18px;right:22px;transform:rotate(8deg);border:3px solid var(--red);color:var(--red);font-weight:700;padding:4px 10px;border-radius:8px;letter-spacing:2px}
+.poster-inner h1{font-size:88px;line-height:.92;margin:0 0 14px;letter-spacing:-2px;font-weight:700}
+.poster-inner h1 span{color:var(--red)}
+.lede{font-size:22px;margin:0 0 28px}
+.poster-inner h2{margin:0 0 14px;font-size:26px}
+.weapons{display:flex;gap:18px;justify-content:center}
+.weapon{flex:1;background:var(--bg);border:4px solid var(--ink);border-radius:20px;padding:20px 14px;box-shadow:var(--shadow);transition:transform .12s;display:flex;flex-direction:column;align-items:center;gap:6px}
+.weapon:hover{transform:translateY(-6px) rotate(-1.5deg);background:var(--yellow)}
+.weapon .we{font-size:64px;line-height:1}
+.weapon b{font-size:22px}.weapon small{font-size:15px;opacity:.8}
+.fine{margin:22px 0 0;opacity:.7}
+
+/* ---------- app ---------- */
+#app{display:flex;flex-direction:column;height:100%}
+#top{height:62px;display:flex;align-items:center;gap:14px;padding:0 18px;background:var(--green);border-bottom:4px solid var(--ink)}
+.logo{font-size:28px;font-weight:700;color:#fff;text-shadow:3px 3px 0 var(--ink);display:flex;align-items:center;gap:8px}
+.tag{color:#fff;font-weight:500;opacity:.9}
+.spacer{flex:1}
+.chip{background:#fff;border:3px solid var(--ink);border-radius:999px;padding:4px 14px;font-weight:600;box-shadow:0 3px 0 var(--ink);display:flex;align-items:center;gap:6px}
+.chip.rank{background:var(--yellow)}
+#reset{background:transparent;border:0;color:#fff;opacity:.75;font-size:14px}
+#main{flex:1;display:flex;min-height:0}
+#map{flex:1;filter:saturate(1.35) contrast(1.05)}
+#side{width:400px;border-left:4px solid var(--ink);background:var(--bg);overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:12px}
+.card{background:var(--card);border:3px solid var(--ink);border-radius:18px;padding:14px;box-shadow:var(--shadow)}
+.card h3{margin:0 0 10px;font-size:20px}
+input,textarea{width:100%;font-family:inherit;font-size:16px;border:3px solid var(--ink);border-radius:12px;padding:8px 10px;margin-bottom:8px;background:#fffdf5}
+textarea{resize:vertical}
+.pinline{font-size:14px;margin-bottom:10px;opacity:.8}
+.pinline.set{opacity:1;color:var(--green-dk);font-weight:600}
+.row{display:flex;gap:8px}
+.btn{border:3px solid var(--ink);border-radius:12px;padding:9px 14px;font-weight:700;font-size:16px;box-shadow:0 4px 0 var(--ink);transition:transform .08s}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
+.btn.primary{background:var(--green);color:#fff;flex:1}
+.btn.ghost{background:#fff}
+.status{display:flex;align-items:center;gap:10px;font-weight:600;background:#fff7d6}
+.spin{width:18px;height:18px;border:3px solid var(--ink);border-top-color:transparent;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.classif .head{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:700}
+.sev{font-size:12px;padding:2px 10px;border-radius:999px;border:2px solid var(--ink);margin-left:auto}
+.sev.high{background:var(--red);color:#fff}.sev.medium{background:var(--yellow)}.sev.low{background:#dfe8dd}
+.classif p{margin:8px 0 0;font-size:15px}
+.term{background:#15201a;color:#9ef0a6;border-color:#15201a;font-family:"JetBrains Mono",monospace}
+.term-h{font-size:12px;opacity:.7;margin-bottom:6px;letter-spacing:1px}
+.term pre{margin:0;font-size:12.5px;white-space:pre-wrap;line-height:1.45}
+.elastic{background:#e9f3ff;font-weight:600;font-size:15px}
+.outcome{font-weight:700;font-size:18px;text-align:center}
+.outcome.new{background:#e2ffe6}.outcome.joined{background:#fff3c4}.outcome.escalated{background:#ffe0e1}.outcome.already{background:#eee}
+
+/* ---------- markers ---------- */
+.mk{width:52px;height:52px;border-radius:50%;background:#fff;border:4px solid var(--ink);display:flex;align-items:center;justify-content:center;font-size:26px;position:relative;box-shadow:0 5px 0 rgba(31,42,31,.3);transition:transform .15s}
+.mk:hover{transform:scale(1.12)}
+.mk .badge{position:absolute;top:-12px;right:-16px;background:var(--yellow);border:3px solid var(--ink);border-radius:999px;font:700 13px Fredoka;padding:1px 7px}
+.mk.open::after{content:"";position:absolute;inset:-8px;border-radius:50%;border:4px solid var(--orange);animation:pulse 1.4s ease-out infinite}
+@keyframes pulse{0%{transform:scale(.85);opacity:1}100%{transform:scale(1.5);opacity:0}}
+.mk.escalated{background:var(--red)}
+.mk.escalated .badge{background:var(--red);color:#fff}
+.mk.escalated::before{content:"🚩";position:absolute;left:-14px;top:-14px;font-size:22px}
+.mk.resolved{background:var(--green);opacity:.85}
+.mk.resolved .badge{background:var(--green);color:#fff}
+.mk.resolved::before{content:"✅";position:absolute;left:-12px;top:-12px;font-size:18px}
+.pin{font-size:34px;filter:drop-shadow(0 4px 0 rgba(0,0,0,.3))}
+.leaflet-div-icon{background:none;border:0}
+
+/* ---------- modal / toast / confetti ---------- */
+#modal{position:fixed;inset:0;background:rgba(31,42,31,.55);z-index:4000;display:flex;align-items:center;justify-content:center}
+.dlg{background:#fff;border:4px solid var(--ink);border-radius:22px;box-shadow:10px 10px 0 var(--ink);width:560px;max-width:92vw;padding:22px 26px;position:relative}
+.dlg h2{margin:0 0 6px;font-size:28px;display:flex;align-items:center;gap:10px}
+.dlg .x{position:absolute;top:10px;right:14px;border:0;background:none;font-size:26px}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 14px}
+.pill{border:2px solid var(--ink);border-radius:999px;padding:2px 10px;font-size:13px;font-weight:600;background:#f3f0e6}
+.pill.escalated{background:var(--red);color:#fff}.pill.open{background:var(--yellow)}.pill.resolved{background:var(--green);color:#fff}
+.flags h4{margin:14px 0 6px;font-size:15px;letter-spacing:1px;opacity:.7}
+.flag{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border:2px solid var(--ink);border-radius:12px;margin-bottom:6px;font-size:14px}
+.flag .src{font-size:11px;font-weight:700;padding:2px 7px;border-radius:6px;white-space:nowrap;border:2px solid var(--ink)}
+.src.s311{background:#cfe3ff}.src.ssafe{background:#d8ffd9}.src.sother{background:#f0d9ff}
+.flag small{display:block;opacity:.6}
+.email{font-family:"JetBrains Mono",monospace;font-size:13px;background:#f3f0e6;border:2px dashed var(--ink);border-radius:12px;padding:12px;white-space:pre-wrap;margin:10px 0}
+#toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 22px;border-radius:999px;font-weight:600;font-size:17px;z-index:4500;box-shadow:0 6px 0 rgba(0,0,0,.3)}
+.cf{position:fixed;top:-20px;width:12px;height:18px;z-index:6000;animation:fall 2.4s linear forwards;border-radius:3px}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+</style>
+</head>
+<body>
+
+<!-- Poster -->
+<div id="poster">
+  <div class="poster-inner">
+    <div class="stamp">SF · 2026</div>
+    <h1>YOU'VE BEEN<br><span>DRAFTED.</span></h1>
+    <p class="lede">San Francisco needs you. 311 closes duplicates. We merge them and escalate with proof of volume.</p>
+    <h2>Choose your weapon</h2>
+    <div class="weapons">
+      <button class="weapon" data-w="Broom" data-e="🧹"><span class="we">🧹</span><b>Broom</b><small>Do the good deed</small></button>
+      <button class="weapon" data-w="Camera" data-e="📷"><span class="we">📷</span><b>Camera</b><small>Report it, or its result</small></button>
+      <button class="weapon" data-w="Pipeline" data-e="🔌"><span class="we">🔌</span><b>Data pipeline</b><small>Bring other data sources</small></button>
+    </div>
+    <p class="fine">Tap a weapon to report for duty.</p>
+  </div>
+</div>
+
+<!-- App -->
+<div id="app">
+  <div id="top">
+    <div class="logo">🛡️ SaFe</div>
+    <div class="tag">Your block. Your watch.</div>
+    <div class="spacer"></div>
+    <div class="chip" id="weaponChip">🧹 Broom</div>
+    <div class="chip rank" id="rankChip">🎖️ Recruit</div>
+    <div class="chip"><span id="reportCount">0</span> reports</div>
+    <button id="reset">↺ reset</button>
+  </div>
+  <div id="main">
+    <div id="map"></div>
+    <aside id="side">
+      <section class="card">
+        <h3>📣 Report for duty</h3>
+        <input id="reporter" placeholder="Your name" value="You">
+        <textarea id="text" rows="3" placeholder="What's wrong on your block?"></textarea>
+        <div id="pinline" class="pinline">📌 Click the map to drop a pin</div>
+        <div class="row">
+          <button id="demoBtn" class="btn ghost">▶ Demo <span id="demoN">1</span>/5</button>
+          <button id="submitBtn" class="btn primary">Submit report</button>
+        </div>
+      </section>
+      <section id="status" class="card status hidden"><span class="spin"></span> Mistral is reading…</section>
+      <section id="classif" class="card classif hidden"></section>
+      <section id="term" class="card term hidden"><div class="term-h">MISTRAL · classify_report()</div><pre id="termBody"></pre></section>
+      <section id="elastic" class="card elastic hidden"></section>
+      <section id="outcome" class="card outcome hidden"></section>
+    </aside>
+  </div>
+</div>
+
+<div id="modal" class="hidden"><div class="dlg" id="dlg"></div></div>
+<div id="toast" class="hidden"></div>
+
+<script>
+/* ================= CONFIG ================= */
+const MOCK = true;                 // false → POST to API below (contract: {message, issue_id, report_count, status, classification, email})
+const API = 'http://localhost:8000';
+const THRESHOLD = 3;
+const MATCH_RADIUS_M = 100;
+const CENTER = [37.7851, -122.4025];   // Yerba Buena / Metreon corner
+const DEMO_PIN = [37.7848, -122.4028];
+
+const CATS = [
+  {key:'dumping',   name:'Illegal dumping', emoji:'🗑️', words:/trash|garbage|dump|litter|mattress|couch|bags|junk/i},
+  {key:'graffiti',  name:'Graffiti',        emoji:'🎨', words:/graffiti|tag|spray|paint/i},
+  {key:'pothole',   name:'Pothole',         emoji:'🕳️', words:/pothole|hole|crack|sinkhole/i},
+  {key:'light',     name:'Streetlight out', emoji:'💡', words:/light|lamp|dark|flicker/i},
+  {key:'needles',   name:'Needles',         emoji:'💉', words:/needle|syringe/i},
+  {key:'camp',      name:'Encampment',      emoji:'⛺', words:/tent|encampment|camp/i},
+  {key:'tree',      name:'Tree hazard',     emoji:'🌳', words:/tree|branch|limb/i},
+  {key:'lane',      name:'Blocked lane',    emoji:'🚗', words:/car|parked|blocking|bike lane|double/i},
+  {key:'other',     name:'Other',           emoji:'📍', words:/$^/},
+];
+const RANKS = [[0,'Recruit','🎖️'],[1,'Scout','🔭'],[3,'Block Captain','🧢'],[5,'Street Marshal','⭐']];
+
+/* ================= SEED DATA ================= */
+const SEED = () => ([
+  {id:'s1', cat:'dumping', lat:37.7853, lon:-122.4041, count:2, status:'open', reporters:['Ana','Marcus'],
+   summary:'Garbage bags piling up by the 4th St bus stop',
+   sources:[{src:'311',text:'Garbage on sidewalk, 4th St near Mission',date:'Oct 28'},
+            {src:'SaFe',who:'Ana',text:'Bags piling up by the bus stop again',date:'Nov 1'}]},
+  {id:'s2', cat:'graffiti', lat:37.7863, lon:-122.4006, count:1, status:'open', reporters:['Priya'],
+   summary:'Tag on the utility box at Jessie Square',
+   sources:[{src:'311',text:'Graffiti on utility box, Jessie St',date:'Oct 30'}]},
+  {id:'s3', cat:'pothole', lat:37.7838, lon:-122.4015, count:3, status:'escalated', reporters:['Leo','Sam','Dev'],
+   summary:'Deep pothole in the bike lane on Howard at 3rd',
+   sources:[{src:'311',text:'Pothole, Howard St bike lane',date:'Oct 22'},
+            {src:'311',text:'Same pothole, got a flat tire',date:'Oct 26'},
+            {src:'Other',who:'SF Open Data',text:'SFMTA bike-lane condition survey: hazard flagged',date:'Oct 20'},
+            {src:'SaFe',who:'Dev',text:'Still there, nearly went over the bars',date:'Nov 2'}]},
+  {id:'s4', cat:'light', lat:37.7871, lon:-122.4031, count:2, status:'resolved', reporters:['Jo','Kim'],
+   summary:'Streetlight out on Mission near 5th',
+   sources:[{src:'311',text:'Streetlight out, Mission & 5th',date:'Oct 15'},
+            {src:'SaFe',who:'Jo',text:'Pitch black walking home',date:'Oct 16'},
+            {src:'Other',who:'SF Open Data',text:'PUC streetlight outage log: repaired Oct 24',date:'Oct 24'}]},
+]);
+const DEMO = [
+  'Someone dumped a mattress on the sidewalk outside the Metreon entrance',
+  'Big mattress blocking the sidewalk by the Metreon, gross',
+  'Mattress still here, kids walking around it on the way to school',
+  'That mattress is STILL there',
+  'Graffiti tag on the mailbox right next to the Metreon doors',
+];
+
+/* ================= STATE ================= */
+let issues = SEED(), markers = {}, pin = null, pinMarker = null, myReports = 0, demoIdx = 0, weapon = {name:'Broom', emoji:'🧹'};
+const $ = id => document.getElementById(id);
+
+/* ================= MAP ================= */
+const map = L.map('map', {zoomControl:true}).setView(CENTER, 17);
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+  attribution:'Tiles &copy; Esri', maxZoom:19}).addTo(map);
+// Alt (no key): 'https://tile.openstreetmap.de/{z}/{x}/{y}.png'
+
+function cat(key){ return CATS.find(c=>c.key===key); }
+function iconFor(i){
+  return L.divIcon({className:'', iconSize:[52,52], iconAnchor:[26,26],
+    html:`<div class="mk ${i.status}"><span>${cat(i.cat).emoji}</span><span class="badge">${Math.min(i.count,THRESHOLD)}/${THRESHOLD}</span></div>`});
+}
+function renderMarkers(){
+  issues.forEach(i=>{
+    if(markers[i.id]) markers[i.id].setIcon(iconFor(i));
+    else markers[i.id] = L.marker([i.lat,i.lon],{icon:iconFor(i)}).addTo(map).on('click',()=>openIssue(i.id));
+  });
+}
+function setPin(lat,lon){
+  pin = {lat,lon};
+  if(!pinMarker) pinMarker = L.marker([lat,lon],{icon:L.divIcon({className:'',html:'<div class="pin">📌</div>',iconSize:[34,34],iconAnchor:[6,34]}),zIndexOffset:1000}).addTo(map);
+  else pinMarker.setLatLng([lat,lon]);
+  $('pinline').textContent = `📌 Pin dropped at ${lat.toFixed(4)}, ${lon.toFixed(4)}`;
+  $('pinline').classList.add('set');
+}
+map.on('click', e => setPin(e.latlng.lat, e.latlng.lng));
+
+/* ================= MOCK MISTRAL + ELASTIC ================= */
+const sleep = ms => new Promise(r=>setTimeout(r,ms));
+function distM(a,b){
+  const R=6371000, toR=x=>x*Math.PI/180;
+  const dLat=toR(b.lat-a.lat), dLon=toR(b.lon-a.lon);
+  const h=Math.sin(dLat/2)**2+Math.cos(toR(a.lat))*Math.cos(toR(b.lat))*Math.sin(dLon/2)**2;
+  return 2*R*Math.asin(Math.sqrt(h));
+}
+async function mockClassify(text, lat, lon){
+  await sleep(900);
+  const c = CATS.find(c=>c.words.test(text)) || cat('other');
+  const severity = /kid|school|danger|huge|injur|flat|blocking/i.test(text) ? 'high' : /still|again|gross/i.test(text) ? 'medium' : 'low';
+  return {category:c.name, category_key:c.key, severity,
+          summary: text.length>70 ? text.slice(0,67)+'…' : text,
+          location:{lat:+lat.toFixed(5), lon:+lon.toFixed(5)},
+          confidence:+(0.86+Math.random()*0.12).toFixed(2), model:'mistral-small-latest'};
+}
+function mockMatch(cls){
+  let best=null;
+  issues.forEach(i=>{
+    if(i.cat!==cls.category_key || i.status==='resolved') return;
+    const d=distM(cls.location,i);
+    if(d<=MATCH_RADIUS_M && (!best||d<best.d)) best={issue:i,d};
+  });
+  return best;
+}
+
+/* ================= SUBMIT ================= */
+async function submitReport(text, reporter, lat, lon){
+  ['classif','term','elastic','outcome'].forEach(id=>$(id).classList.add('hidden'));
+  $('status').classList.remove('hidden');
+
+  let result;
+  if(MOCK){
+    const cls = await mockClassify(text, lat, lon);
+    showClassification(cls);
+    await sleep(500);
+    const m = mockMatch(cls);
+    let issue, status, email=null, message;
+    if(!m){
+      issue={id:'i'+Date.now(), cat:cls.category_key, lat, lon, count:1, status:'open', reporters:[reporter], summary:cls.summary,
+             sources:[{src:'SaFe',who:reporter,text,date:'now'}]};
+      issues.push(issue); status='new';
+      $('elastic').innerHTML=`⚡ Elasticsearch: no <b>${cls.category}</b> within ${MATCH_RADIUS_M} m → new issue <b>#${issue.id}</b>`;
+      message=`New issue logged. You're the first. 1/${THRESHOLD}.`;
+    } else {
+      issue=m.issue;
+      $('elastic').innerHTML=`⚡ Elasticsearch: matched issue <b>#${issue.id}</b> · <b>${Math.round(m.d)} m</b> away · same category`;
+      issue.sources.push({src:'SaFe',who:reporter,text,date:'now'});
+      if(!issue.reporters.includes(reporter)) issue.reporters.push(reporter);
+      if(issue.status==='escalated'){
+        status='already'; issue.count++;
+        message=`Already escalated to DPW. We'll tell you when it's fixed.`;
+      } else {
+        issue.count++;
+        if(issue.count>=THRESHOLD){
+          issue.status='escalated'; status='escalated';
+          email=buildEmail(issue);
+          message=`Threshold hit: ${issue.count}/${THRESHOLD}. Escalated to DPW with proof of volume.`;
+        } else { status='joined'; message=`Already reported. Joined issue #${issue.id}. ${issue.count}/${THRESHOLD}.`; }
+      }
+    }
+    result={message, issue_id:issue.id, report_count:issue.count, status, classification:cls, email};
+  } else {
+    const r = await fetch(API+'/report',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({reporter,text,lat,lon})});
+    result = await r.json();
+    showClassification(result.classification);
+    issues = await (await fetch(API+'/issues')).json();
+  }
+
+  $('status').classList.add('hidden');
+  $('elastic').classList.remove('hidden');
+  renderMarkers();
+  showOutcome(result);
+  myReports++; updateRank();
+  console.log('submit_report →', result);
+  return result;
+}
+function showClassification(cls){
+  const c = CATS.find(x=>x.name===cls.category)||cat('other');
+  $('classif').innerHTML=`<div class="head"><span>${c.emoji}</span>${cls.category}<span class="sev ${cls.severity}">${cls.severity}</span></div><p>${cls.summary}</p>`;
+  $('classif').classList.remove('hidden');
+  $('termBody').textContent = JSON.stringify(cls,null,2);
+  $('term').classList.remove('hidden');
+}
+function showOutcome(r){
+  const o=$('outcome'); o.className='card outcome '+r.status; o.textContent=r.message; o.classList.remove('hidden');
+  if(r.status==='escalated'){ confetti(); openEmail(r); }
+  if(r.status==='already') toast('🚩 Already escalated. We\'ll ping you when DPW resolves it.');
+  if(r.status==='joined') toast(`🙌 Already reported. You joined ${r.report_count}/${THRESHOLD}.`);
+  if(r.status==='new') toast('🆕 New issue logged. Rally your neighbors.');
+}
+function buildEmail(i){
+  const c=cat(i.cat), by={};
+  i.sources.forEach(s=>by[s.src]=(by[s.src]||0)+1);
+  const srcLine=Object.entries(by).map(([k,v])=>`${k} ×${v}`).join(', ');
+  return {to:'dpw-escalations@sfgov.org', subject:`[SaFe] ${i.count} residents report ${c.name} at ${i.lat.toFixed(4)}, ${i.lon.toFixed(4)}`,
+    body:`${i.count} matching reports within ${MATCH_RADIUS_M} m in the last 30 days.\nReporters: ${i.reporters.join(', ')}\nLatest: "${i.sources[i.sources.length-1].text}"\nSources: ${srcLine}\nSeverity: high\n\nPlease dispatch. Reply to this thread to close.`};
+}
+
+/* ================= DIALOGS ================= */
+function openIssue(id){
+  const i=issues.find(x=>x.id===id), c=cat(i.cat);
+  const flags=i.sources.map(s=>`<div class="flag"><span class="src s${s.src.toLowerCase()}">${s.src==='311'?'🏛 311':s.src==='SaFe'?'🛡 SaFe':'🔗 '+(s.who||'Other')}</span><div>${s.text}<small>${s.who&&s.src==='SaFe'?s.who+' · ':''}${s.date}</small></div></div>`).join('');
+  $('dlg').innerHTML=`<button class="x" onclick="closeModal()">✕</button>
+    <h2>${c.emoji} ${c.name}</h2><div>${i.summary}</div>
+    <div class="meta"><span class="pill ${i.status}">${i.status}</span><span class="pill">${Math.min(i.count,THRESHOLD)}/${THRESHOLD} reports</span><span class="pill">👥 ${i.reporters.join(', ')}</span></div>
+    <div class="flags"><h4>FLAGS · ${i.sources.length}</h4>${flags}</div>`;
+  $('modal').classList.remove('hidden');
+}
+function openEmail(r){
+  const e=r.email;
+  console.log('MOCK EMAIL →\n'+`To: ${e.to}\nSubject: ${e.subject}\n\n${e.body}`);
+  $('dlg').innerHTML=`<button class="x" onclick="closeModal()">✕</button>
+    <h2>🚩 Escalated to DPW</h2><div class="meta"><span class="pill escalated">threshold ${THRESHOLD} hit</span><span class="pill">mocked · printed to console</span></div>
+    <div class="email">To: ${e.to}\nSubject: ${e.subject}\n\n${e.body}</div>
+    <button class="btn primary" onclick="closeModal()">Sent. Back to the map</button>`;
+  $('modal').classList.remove('hidden');
+}
+function closeModal(){ $('modal').classList.add('hidden'); }
+$('modal').addEventListener('click',e=>{ if(e.target.id==='modal') closeModal(); });
+
+/* Console-only resolve, as decided. Usage in DevTools: resolveIssue('s1') */
+window.resolveIssue = function(id){
+  const i=issues.find(x=>x.id===id); if(!i) return console.warn('no issue',id);
+  i.status='resolved'; renderMarkers();
+  const notices=i.reporters.map(r=>`📬 ${r}: "${cat(i.cat).name} near ${i.lat.toFixed(4)},${i.lon.toFixed(4)} was resolved. Thanks for reporting."`);
+  console.log('resolve →',{notices}); return {notices};
+};
+
+/* ================= UI BITS ================= */
+let toastT; function toast(msg){ const t=$('toast'); t.textContent=msg; t.classList.remove('hidden'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.add('hidden'),3200); }
+function confetti(){ const cols=['#ffd23f','#ff8c42','#ff5a5f','#3fc251','#4aa3ff','#8b5cf6'];
+  for(let k=0;k<70;k++){ const s=document.createElement('span'); s.className='cf'; s.style.left=Math.random()*100+'vw'; s.style.background=cols[k%cols.length]; s.style.animationDelay=(Math.random()*.6)+'s'; document.body.appendChild(s); setTimeout(()=>s.remove(),3200);} }
+function updateRank(){ const r=[...RANKS].reverse().find(x=>myReports>=x[0]); $('rankChip').textContent=`${r[2]} ${r[1]}`; $('reportCount').textContent=myReports; }
+
+document.querySelectorAll('.weapon').forEach(b=>b.onclick=()=>{
+  weapon={name:b.dataset.w,emoji:b.dataset.e}; $('weaponChip').textContent=`${weapon.emoji} ${weapon.name}`;
+  $('poster').style.transition='transform .35s, opacity .35s'; $('poster').style.transform='scale(1.1)'; $('poster').style.opacity='0';
+  setTimeout(()=>{ $('poster').classList.add('hidden'); map.invalidateSize(); toast(`${weapon.emoji} Reporting for duty. Your block is counting on you.`); },350);
+});
+$('submitBtn').onclick=async()=>{
+  const text=$('text').value.trim(); if(!text) return toast('Type what you saw first.');
+  const p = pin || {lat:map.getCenter().lat, lon:map.getCenter().lng};
+  if(!pin) setPin(p.lat,p.lon);
+  $('submitBtn').disabled=true;
+  await submitReport(text, $('reporter').value.trim()||'You', p.lat, p.lon);
+  $('submitBtn').disabled=false; $('text').value='';
+};
+$('demoBtn').onclick=()=>{
+  $('text').value=DEMO[demoIdx];
+  const j=()=> (Math.random()-.5)*0.0003;   // ~±15 m jitter
+  setPin(DEMO_PIN[0]+j(), DEMO_PIN[1]+j());
+  demoIdx=(demoIdx+1)%DEMO.length; $('demoN').textContent=demoIdx+1;
+};
+$('reset').onclick=()=>{
+  issues=SEED(); Object.values(markers).forEach(m=>map.removeLayer(m)); markers={}; renderMarkers();
+  if(pinMarker){map.removeLayer(pinMarker);pinMarker=null;} pin=null; $('pinline').textContent='📌 Click the map to drop a pin'; $('pinline').classList.remove('set');
+  myReports=0; demoIdx=0; $('demoN').textContent='1'; updateRank(); $('text').value='';
+  ['status','classif','term','elastic','outcome'].forEach(id=>$(id).classList.add('hidden')); toast('↺ Demo reset');
+};
+
+renderMarkers(); updateRank();
+</script>
+</body>
+</html>

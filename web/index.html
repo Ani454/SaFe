@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0f766e">
+  <title>SaFe — Neighborhood workspace</title>
+  <link rel="stylesheet" href="/styles.css"><script src="/app.js" defer></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="wordmark" href="/" aria-label="SaFe home"><span class="brand-icon" aria-hidden="true">s.</span>SaFe<span class="wordmark-dot">•</span></a>
+    <div class="workspace-label">NEIGHBORHOOD WORKSPACE</div>
+    <nav aria-label="Tools">
+      <button class="nav-item active" data-tool="classify" aria-current="page"><span aria-hidden="true">◈</span> Review a report <span class="nav-arrow" aria-hidden="true">↗</span></button>
+      <button class="nav-item" data-tool="match"><span aria-hidden="true">⧉</span> Compare reports</button>
+      <button class="nav-item" data-tool="agency"><span aria-hidden="true">✉</span> Agency draft</button>
+      <button class="nav-item" data-tool="resolution"><span aria-hidden="true">✓</span> Resolution notice</button>
+    </nav>
+    <div class="sidebar-note"><span class="small-label">A LITTLE CONTEXT</span><p>One neighborhood.<br>Many voices.<br>A clearer picture.</p><span class="note-line"></span><span>Built for San Francisco.</span></div>
+    <div class="sidebar-footer"><span class="city-dot"></span> SF hackathon prototype <span>↗</span></div>
+  </aside>
+  <div class="main-shell">
+    <header class="topbar"><div><span class="breadcrumb">Workspace</span><span class="slash">/</span><span id="breadcrumb-tool">Review a report</span></div><span class="location"><span aria-hidden="true">⌖</span> San Francisco, CA</span></header>
+    <main>
+      <section class="intro"><div class="eyebrow"><span></span> SMALL REPORTS. SHARED PROGRESS.</div><h1>Report it once,<br>and it <em>counts.</em></h1><p>Turn everyday neighborhood concerns into clear,<br class="desktop-break"> actionable reports. A better block starts here.</p>
+        <div class="intro-art" aria-hidden="true"><svg viewBox="0 0 360 180" fill="none"><path d="M0 130L360 40M0 70L360 160M40 0L100 180M150 0L210 180M260 0L320 180" stroke="#d6e0dd" stroke-width="17"/><path d="M0 130L360 40M0 70L360 160M40 0L100 180M150 0L210 180M260 0L320 180" stroke="#f6f8f7" stroke-width="12"/><rect x="97" y="56" width="58" height="45" rx="8" transform="rotate(-14 97 56)" fill="#c1d5bc"/><rect x="209" y="87" width="56" height="39" rx="8" transform="rotate(-14 209 87)" fill="#c1d5bc"/><circle cx="187" cy="80" r="31" fill="#0f766e" fill-opacity=".09"/><circle cx="187" cy="80" r="19" fill="#0f766e" fill-opacity=".13"/><path d="M187 60c-9 0-16 7-16 16 0 12 16 25 16 25s16-13 16-25c0-9-7-16-16-16Z" fill="#0f766e"/><circle cx="187" cy="76" r="5" fill="white"/><circle cx="83" cy="135" r="5" fill="#d69b66"/><circle cx="281" cy="57" r="5" fill="#d69b66"/></svg><span>Good things happen, block by block.</span></div>
+      </section>
+      <section class="mode-bar" aria-label="Connection status"><div><span class="status-dot" id="connection-dot"></span><strong id="connection-label">Checking connection</strong><span class="mode-detail" id="connection-detail">Your API key stays on the server.</span></div><span class="mode-tag">MISTRAL WORKSPACE</span></section>
+      <div class="content-grid">
+        <section class="card input-card" aria-labelledby="tool-title">
+          <div class="card-heading"><div><span class="step-label" id="step-label">01 / UNDERSTAND</span><h2 id="tool-title">What's happening?</h2></div><span class="tool-icon" id="tool-icon" aria-hidden="true">◈</span></div>
+          <p class="card-description" id="tool-description">Describe a problem in your neighborhood. We'll help make it clear.</p>
+          <form id="tool-form">
+            <div id="report-fields"><label for="report">Your report</label><textarea id="report" maxlength="6000" rows="6" placeholder="There's a mattress blocking the sidewalk at 16th and Mission. It's been there since yesterday."></textarea><div class="field-helper"><span>Be specific about the problem and location.</span><span id="character-count">0 / 6,000</span></div></div>
+            <div id="compare-fields" hidden><label for="existing">Existing issue summary</label><textarea id="existing" maxlength="6000" rows="3" placeholder="Describe the issue to compare against…"></textarea><p class="field-helper">Same category doesn't always mean the same issue.</p></div>
+            <div id="draft-fields" hidden>
+              <div id="agency-field"><label for="agency">Responsible agency</label><input id="agency" maxlength="200" placeholder="e.g. San Francisco Public Works"></div>
+              <div class="label-row"><label for="issue">Issue details <span class="muted">· JSON</span></label><button type="button" class="text-button" id="load-issue">Use example details ↗</button></div><textarea id="issue" rows="11" spellcheck="false" aria-describedby="issue-help"></textarea><p class="field-helper" id="issue-help">Include category, summary, coordinates, count, and first / last timestamps.</p>
+            </div>
+            <div class="form-actions"><button class="primary" type="submit" id="submit-button">Review report <span aria-hidden="true">→</span></button><button class="secondary" type="button" id="sample-button">Try a sample</button></div>
+            <p class="form-footnote" id="form-footnote">Your text is sent to Mistral only when you choose Review report.</p>
+          </form>
+          <div class="error" id="error" role="alert" hidden></div>
+        </section>
+        <section class="card output-card" aria-labelledby="output-title"><div class="output-header"><h2 id="output-title">The clearer picture</h2><span class="pill" id="result-badge">READY WHEN YOU ARE</span></div>
+          <div id="empty-state" class="empty-state"><div class="empty-illustration" aria-hidden="true"><span class="paper-line"></span><span class="paper-line"></span><span class="paper-line short"></span><span class="paper-check">✓</span></div><h3>A small step toward a better block.</h3><p>Your report's category, summary, and suggested<br class="desktop-break"> priority will appear here.</p><div class="empty-chips"><span>Clearer reports</span><span>Shared understanding</span></div></div>
+          <div id="result" aria-live="polite" hidden></div>
+          <div class="output-footer"><span aria-hidden="true">◇</span><span id="output-note">Analysis is a suggestion. It doesn't verify an incident.</span><button type="button" id="copy-button" class="text-button" hidden>Copy result</button></div>
+        </section>
+      </div>
+      <section class="how-it-works" aria-label="How SaFe fits together"><div class="how-title"><span class="eyebrow">FROM A REPORT TO A RESPONSE</span><h2>Every voice adds up.</h2></div><div class="how-step"><span>01</span><div><h3>Make it clear</h3><p>Mistral helps organize the details.</p></div></div><div class="how-step"><span>02</span><div><h3>Bring it together</h3><p>The shared pipeline groups matches.</p></div></div><div class="how-step"><span>03</span><div><h3>Keep people in the loop</h3><p>Prepare agency and resident updates.</p></div></div></section>
+      <footer class="page-footer"><span>SaFe <span class="muted">/</span> Built with care for the city we share.</span><span>Drafts only. No emails or city reports are sent.</span></footer>
+    </main>
+  </div>
+</body>
+</html>

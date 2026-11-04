@@ -50,7 +50,7 @@ The source doc's phrase “already reported to the city” describes the eventua
 
 ## Visual defaults
 
-Keep the identity lightweight: a clear wordmark and a small set of reusable tokens are enough. A polished front end is outside the current hackathon scope.
+Keep the identity lightweight: a clear wordmark and a small set of reusable tokens are enough. The user subsequently requested a polished Person B workspace; use these defaults for its local UI.
 
 | Token | Value | Use |
 | --- | --- | --- |

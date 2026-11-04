@@ -20,7 +20,7 @@ def load_env():
             if not line or line.startswith("#") or "=" not in line:
                 continue
             key, value = line.split("=", 1)
-            if key.strip() in {"MISTRAL_API_KEY", "MISTRAL_MODEL", "MISTRAL_TIMEOUT_SECONDS"}:
+            if key.strip() in {"MISTRAL_API_KEY", "MISTRAL_MODEL", "MISTRAL_TIMEOUT_SECONDS", "SAFE_SECRET_KEY", "SAFE_ENV", "SAFE_STORAGE", "SAFE_DB", "SAFE_SEARCH_BACKEND", "ES_URL", "ES_API_KEY"}:
                 os.environ.setdefault(key.strip(), value.strip().strip("\"'"))
 
 

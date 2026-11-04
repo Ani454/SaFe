@@ -7,3 +7,9 @@ __pycache__/
 sf311_raw.csv
 sf311_clean.csv
 sf311_clean.parquet
+instance/
+*.db
+*.db-wal
+*.db-shm
+.env.*
+!.env.example

@@ -85,3 +85,7 @@ Keep this section current as integration evidence lands. All messages remain dra
 > SaFe turns scattered neighborhood reports into a shared issue and a clear next step: one consolidated message ready for review. Elasticsearch supplies the relevant record; Mistral makes the language useful.
 
 The next external validation is a review with residents and agency staff: do the grouped issue and draft preserve the details they need? Describe city delivery, operational savings, and broader deployment as future work until verified.
+
+## Integration update
+
+The integrated website now contains the shared lifecycle, community activities, authorized evidence review, and reward ledger. Automated journeys test report ten/eleven, conservative separation, failed-draft retry, resolution retry, capacity limits, review authorization, repeated approval, and reversal. Elasticsearch query shape is checked with a mocked transport; Mistral results are mocked in tests. Do not treat these tests as a live sponsor integration demonstration. Use the credentialed rehearsal in DEPLOYMENT.md before claiming live quality. The earlier current-gap tables describe the pre-integration baseline.

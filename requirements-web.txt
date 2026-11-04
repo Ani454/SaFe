@@ -1,0 +1,2 @@
+# Reproducible environment used for the integrated journey suite.
+-r requirements-web.lock.txt

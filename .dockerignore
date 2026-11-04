@@ -1,0 +1,11 @@
+.git
+.venv
+.env
+instance
+__pycache__
+**/__pycache__
+*.db*
+elastic-start-local
+notebooks
+phase4_test_run.json
+.env.*

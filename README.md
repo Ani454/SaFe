@@ -76,3 +76,11 @@ git diff --check
 Tests mock Mistral and cover parsing, strict booleans and priorities, vague reports, provider failures, issue validation, privacy exclusions, and local HTTP routes. They do not prove live model quality. A live model run requires a valid key and network access; Elasticsearch integration requires the other workstreams.
 
 All email and notice outputs are drafts. Nothing is sent. Sample counts and coordinates are synthetic fixtures. No SF311 statistic is shown until measured against the actual dataset.
+
+## Integrated website (current application)
+
+The full product now runs from **website.py**, not the Person B tool server. Install requirements-web.txt and run `.venv/bin/flask --app website:create_app run --port 8001`. See [DEPLOYMENT.md](DEPLOYMENT.md) for configuration, reviewer setup, persistent storage, Docker/Gunicorn deployment, recovery, and evidence limits.
+
+The shared site provides authenticated reporting, persistent issue history, Elasticsearch candidate retrieval plus Mistral identity confirmation, threshold drafts and retries, cleanup activities and membership, human completion review, auditable point awards/reversals, profiles, a leaderboard, and generated per-reporter resolution notices. The SF311 read-only explorer shares the same navigation; original app.py, data scripts, notebooks, and Person B workspace are preserved as research/development tools.
+
+SQLite is authoritative for transactional application records. Elasticsearch is a synchronized search projection with a durable dirty flag; default retrieval requires ES_URL. An explicit SAFE_SEARCH_BACKEND=sqlite local mode displays a banner and never pretends to be Elasticsearch. No credentials are included, and the integrated site never silently falls back to mock Mistral output. Live provider calls and container/cloud deployment still need environment verification. The earlier workspace-only implementation descriptions above are retained for its standalone usage and historical context.

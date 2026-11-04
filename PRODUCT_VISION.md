@@ -44,3 +44,7 @@ The repository is [Ani454/SaFe](https://github.com/Ani454/SaFe). Inspect the rel
 Lead with the working combined Elasticsearch–Mistral flow. Explain the larger purpose as a path from reporting to community contribution and recognition. If an NGO completion/reward screen is illustrative, label it as a proposed workflow. A planned leaderboard contributes to the story; only demonstrated behavior supports an implementation claim.
 
 For a future community-action demo, a cleanup scenario makes the contributor journey clearer than volunteers repairing a streetlight. Keep the broken-streetlight example for agency escalation and status tracking. Preserve the two-minute core demo in [JUDGING.md](JUDGING.md); do not crowd out the actual queries and model decisions with roadmap screens.
+
+## Implementation update
+
+The user's full-site request authorizes and implements the reporting-to-community-action journey in website.py, backed by store.py, pipeline.py, and es_store.py. Activities, membership, completion evidence, admin review history, configurable point awards/reversals, profiles, leaderboard, and per-reporter generated notices now have persistent records and shared pages. Review is manual and resolution is explicit. They are application behavior, with external Mistral and Elasticsearch integration still requiring a credentialed live run. The earlier branch-state inventory above describes the pre-integration baseline. Deployment evidence and limits are in DEPLOYMENT.md.

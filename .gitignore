@@ -4,3 +4,6 @@ __pycache__/
 *.py[cod]
 .DS_Store
 .pytest_cache/
+sf311_raw.csv
+sf311_clean.csv
+sf311_clean.parquet

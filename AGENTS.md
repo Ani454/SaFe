@@ -6,11 +6,23 @@ These instructions apply throughout this repository. Read this file and [BRANDIN
 
 The team's [Google Doc](https://docs.google.com/document/d/1bNgqXvLrVUD0cKjE_3u92J4tO1wbgkOCv7hBx2KxQjs/edit?tab=t.dca2et6zltrd), read November 3, 2026, contains an exploratory `idea` tab and a concrete `prompts` tab. Follow the prompts tab's backend-first plan. This file preserves its shared contracts and makes implementation ambiguities explicit. Branding visual defaults are proposed by BRANDING.md, not specified in the source doc.
 
+## Judging and demo context
+
+Read [JUDGING.md](JUDGING.md) before changing pitch copy, demo flows, or feature priorities. The organizer's [repository rubric](https://github.com/jdarmada/elastic-mistral-hacknight#judging-criteria-and-presentations), checked November 3, 2026, lists **Novelty**, **Use of Elastic**, and **Use of Mistral**, without numerical weights. Prepare a two-minute initial demo and a three-minute finalist version. Show both technologies; prioritize integration evidence over additional interface work.
+
+The [starter ideas](https://github.com/jdarmada/elastic-mistral-hacknight/blob/main/open_challenge.md) already include 311 classification and nearby-case retrieval. SaFe's proposed distinction is physical-issue identity plus accumulated report history and a consolidated escalation lifecycle. Demonstrate this distinction; do not claim novelty solely from the starter operations. Agent Builder and semantic/vector search are optional extensions, not prerequisites for the agreed MVP.
+
+Make the combined stack visible through evidence: Elasticsearch retrieves and stores the relevant issue; Mistral structures language, confirms physical-issue identity, and drafts from supplied facts. Prioritize the integrated lifecycle and the same-category different-object demonstration. Preserve the current contracts and ownership boundaries. Never imply that the Person B workspace alone implements Elasticsearch retrieval or threshold enforcement, or claim hybrid/vector search, model accuracy, city workload savings, or live integration without supporting implementation and measurements.
+
 ## Product and scope
 
 SaFe groups reports about the same neighborhood problem in San Francisco. Mistral classifies text and helps confirm matches. Elasticsearch retrieves nearby issues and stores their report history. At 10 reports, generate one consolidated agency email draft. Once an issue is resolved, generate a notice for each subscribed reporter.
 
-Build a working Python backend demonstrated through a notebook, script, or Kibana. Keep classification, geo matching, and threshold escalation as the core. Photo verification, gamification, neighborhood ranking, meetups, and additional social feeds are outside the MVP.
+Build a working Python backend demonstrated through a notebook, script, or Kibana. Keep classification, geo matching, and threshold escalation as the core of the agreed integration MVP.
+
+**November 3 product-vision clarification:** The user explicitly described a broader gamified community-action product: NGOs discover issues, contributors submit completion photos for review, approved work earns awards/points, and a contributor leaderboard recognizes participation. Scheduled volunteer activities and joining are a provisional interpretation of the user's reference to dates and people joining. Read [PRODUCT_VISION.md](PRODUCT_VISION.md) for the intended journey and implementation boundaries. These capabilities are now part of the product direction; this update documents them without implementing new APIs, storage fields, or rewards. Keep the existing integration contracts until extensions are coordinated. Neighborhood safety rankings and unrelated social feeds remain outside the agreed scope.
+
+Ten reports trigger an escalation workflow; they are not proof that a claim is true or that ten independent people observed it. A completion upload is a claim awaiting review, not automatic resolution or an automatic point award. Distinguish proposed, implemented, and live-verified behavior in all product and pitch copy.
 
 **November 3 scope update:** The user explicitly requested a proper UI for Person B. A focused local Mistral workspace in ui_server.py and web/ is now in scope alongside mistral_ai.py. This does not add ownership of Person A's storage or Person C's shared pipeline. Live calls and illustrative sample previews must be clearly distinguished.
 

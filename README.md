@@ -6,6 +6,10 @@ SaFe groups matching San Francisco neighborhood reports so residents are heard a
 
 Read [AGENTS.md](AGENTS.md) for shared contracts and [BRANDING.md](BRANDING.md) for product copy and visual guidance.
 
+The broader [product vision](PRODUCT_VISION.md) connects reporting with NGO/community action, completion review, and contributor rewards. It records the user's gamification direction, proposed volunteer activities, and what remains to be built. The shared [SaFe repository](https://github.com/Ani454/SaFe) also has a Streamlit SF311 exploration app on `main`; this branch documents and runs the Person B workspace below. Source inspection does not verify that either app is deployed or that the full product is online.
+
+For the pitch and integration demo, read [JUDGING.md](JUDGING.md): the published criteria (Novelty, Use of Elastic, Use of Mistral), a two-minute initial demo and three-minute finalist plan, and the evidence still needed. The central demonstration is ten differently worded reports becoming one issue and one reviewable agency draft, while a different object nearby stays separate. This combined lifecycle goes beyond classification and nearby-case retrieval in the organizer's starter idea. It is the integration target; the current checkout provides the Person B workspace described below.
+
 ## Person B: Mistral workspace
 
 All four agreed functions are in [mistral_ai.py](mistral_ai.py), with a responsive local UI for report classification, comparing descriptions, drafting agency emails, and drafting resolution notices.

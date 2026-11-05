@@ -4,6 +4,8 @@
 
 Based on the team's [project notes and build prompts](https://docs.google.com/document/d/1bNgqXvLrVUD0cKjE_3u92J4tO1wbgkOCv7hBx2KxQjs/edit?tab=t.dca2et6zltrd), read November 3, 2026. The prompts tab defines the current product direction; the idea tab records earlier exploration. The positioning and tagline below follow the doc. Visual choices are starter defaults introduced by this guide, and can be revised by the team.
 
+The user's subsequent November 3 clarification adds community action and contributor recognition to the broader product direction. [PRODUCT_VISION.md](PRODUCT_VISION.md) records that expansion and separates it from the implemented workspace and agreed integration MVP.
+
 ## Identity
 
 - **Name:** SaFe. Preserve this capitalization in product copy; use `safe` for code identifiers when needed. Do not invent an expanded acronym.
@@ -80,4 +82,4 @@ Lead the demo with a measured count of SF311 cases whose notes mention duplicate
 
 Show the core loop: ten descriptions become one issue and one draft; an eleventh submission sees the existing escalation; a different nearby problem stays separate; resolution generates notices.
 
-Cleanup photos, points, leaderboards, neighborhood recommendations, private social feeds, and weekend meetups are future ideas. Do not present them as implemented features. Use synthetic reporter identities in screenshots and public examples.
+Completion photos and review, NGO participation, points, contributor leaderboards, and proposed volunteer activities are planned parts of the clarified product vision. Describe them as planned until implemented and demonstrated. Use “completion submitted for review” before approval and “points awarded for an approved contribution” after approval; never equate ten reports with AI verification. Neighborhood recommendations and private social feeds remain outside the agreed scope. Use synthetic reporter identities in screenshots and public examples.

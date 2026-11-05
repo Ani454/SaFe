@@ -6,6 +6,10 @@ SaFe groups matching San Francisco neighborhood reports so residents are heard a
 
 Read [AGENTS.md](AGENTS.md) for shared contracts and [BRANDING.md](BRANDING.md) for product copy and visual guidance.
 
+The broader [product vision](PRODUCT_VISION.md) connects reporting with NGO/community action, completion review, and contributor rewards. It records the user's gamification direction, proposed volunteer activities, and what remains to be built. The shared [SaFe repository](https://github.com/Ani454/SaFe) also has a Streamlit SF311 exploration app on `main`; this branch documents and runs the Person B workspace below. Source inspection does not verify that either app is deployed or that the full product is online.
+
+For the pitch and integration demo, read [JUDGING.md](JUDGING.md): the published criteria (Novelty, Use of Elastic, Use of Mistral), a two-minute initial demo and three-minute finalist plan, and the evidence still needed. The central demonstration is ten differently worded reports becoming one issue and one reviewable agency draft, while a different object nearby stays separate. This combined lifecycle goes beyond classification and nearby-case retrieval in the organizer's starter idea. It is the integration target; the current checkout provides the Person B workspace described below.
+
 ## Person B: Mistral workspace
 
 All four agreed functions are in [mistral_ai.py](mistral_ai.py), with a responsive local UI for report classification, comparing descriptions, drafting agency emails, and drafting resolution notices.
@@ -72,3 +76,11 @@ git diff --check
 Tests mock Mistral and cover parsing, strict booleans and priorities, vague reports, provider failures, issue validation, privacy exclusions, and local HTTP routes. They do not prove live model quality. A live model run requires a valid key and network access; Elasticsearch integration requires the other workstreams.
 
 All email and notice outputs are drafts. Nothing is sent. Sample counts and coordinates are synthetic fixtures. No SF311 statistic is shown until measured against the actual dataset.
+
+## Integrated website (current application)
+
+The full product now runs from **website.py**, not the Person B tool server. Install requirements-web.txt and run `.venv/bin/flask --app website:create_app run --port 8001`. See [DEPLOYMENT.md](DEPLOYMENT.md) for configuration, reviewer setup, persistent storage, Docker/Gunicorn deployment, recovery, and evidence limits.
+
+The shared site provides authenticated reporting, persistent issue history, Elasticsearch candidate retrieval plus Mistral identity confirmation, threshold drafts and retries, cleanup activities and membership, human completion review, auditable point awards/reversals, profiles, a leaderboard, and generated per-reporter resolution notices. The SF311 read-only explorer shares the same navigation; original app.py, data scripts, notebooks, and Person B workspace are preserved as research/development tools.
+
+SQLite is authoritative for transactional application records. Elasticsearch is a synchronized search projection with a durable dirty flag; default retrieval requires ES_URL. An explicit SAFE_SEARCH_BACKEND=sqlite local mode displays a banner and never pretends to be Elasticsearch. No credentials are included, and the integrated site never silently falls back to mock Mistral output. Live provider calls and container/cloud deployment still need environment verification. The earlier workspace-only implementation descriptions above are retained for its standalone usage and historical context.

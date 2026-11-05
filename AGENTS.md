@@ -6,11 +6,23 @@ These instructions apply throughout this repository. Read this file and [BRANDIN
 
 The team's [Google Doc](https://docs.google.com/document/d/1bNgqXvLrVUD0cKjE_3u92J4tO1wbgkOCv7hBx2KxQjs/edit?tab=t.dca2et6zltrd), read November 3, 2026, contains an exploratory `idea` tab and a concrete `prompts` tab. Follow the prompts tab's backend-first plan. This file preserves its shared contracts and makes implementation ambiguities explicit. Branding visual defaults are proposed by BRANDING.md, not specified in the source doc.
 
+## Judging and demo context
+
+Read [JUDGING.md](JUDGING.md) before changing pitch copy, demo flows, or feature priorities. The organizer's [repository rubric](https://github.com/jdarmada/elastic-mistral-hacknight#judging-criteria-and-presentations), checked November 3, 2026, lists **Novelty**, **Use of Elastic**, and **Use of Mistral**, without numerical weights. Prepare a two-minute initial demo and a three-minute finalist version. Show both technologies; prioritize integration evidence over additional interface work.
+
+The [starter ideas](https://github.com/jdarmada/elastic-mistral-hacknight/blob/main/open_challenge.md) already include 311 classification and nearby-case retrieval. SaFe's proposed distinction is physical-issue identity plus accumulated report history and a consolidated escalation lifecycle. Demonstrate this distinction; do not claim novelty solely from the starter operations. Agent Builder and semantic/vector search are optional extensions, not prerequisites for the agreed MVP.
+
+Make the combined stack visible through evidence: Elasticsearch retrieves and stores the relevant issue; Mistral structures language, confirms physical-issue identity, and drafts from supplied facts. Prioritize the integrated lifecycle and the same-category different-object demonstration. Preserve the current contracts and ownership boundaries. Never imply that the Person B workspace alone implements Elasticsearch retrieval or threshold enforcement, or claim hybrid/vector search, model accuracy, city workload savings, or live integration without supporting implementation and measurements.
+
 ## Product and scope
 
 SaFe groups reports about the same neighborhood problem in San Francisco. Mistral classifies text and helps confirm matches. Elasticsearch retrieves nearby issues and stores their report history. At 10 reports, generate one consolidated agency email draft. Once an issue is resolved, generate a notice for each subscribed reporter.
 
-Build a working Python backend demonstrated through a notebook, script, or Kibana. Keep classification, geo matching, and threshold escalation as the core. Photo verification, gamification, neighborhood ranking, meetups, and additional social feeds are outside the MVP.
+Build a working Python backend demonstrated through a notebook, script, or Kibana. Keep classification, geo matching, and threshold escalation as the core of the agreed integration MVP.
+
+**November 3 product-vision clarification:** The user explicitly described a broader gamified community-action product: NGOs discover issues, contributors submit completion photos for review, approved work earns awards/points, and a contributor leaderboard recognizes participation. Scheduled volunteer activities and joining are a provisional interpretation of the user's reference to dates and people joining. Read [PRODUCT_VISION.md](PRODUCT_VISION.md) for the intended journey and implementation boundaries. These capabilities are now part of the product direction; this update documents them without implementing new APIs, storage fields, or rewards. Keep the existing integration contracts until extensions are coordinated. Neighborhood safety rankings and unrelated social feeds remain outside the agreed scope.
+
+Ten reports trigger an escalation workflow; they are not proof that a claim is true or that ten independent people observed it. A completion upload is a claim awaiting review, not automatic resolution or an automatic point award. Distinguish proposed, implemented, and live-verified behavior in all product and pitch copy.
 
 **November 3 scope update:** The user explicitly requested a proper UI for Person B. A focused local Mistral workspace in ui_server.py and web/ is now in scope alongside mistral_ai.py. This does not add ownership of Person A's storage or Person C's shared pipeline. Live calls and illustrative sample previews must be clearly distinguished.
 
@@ -138,3 +150,13 @@ Use fixtures and mocked external responses for repeatable checks, then run one i
 When time slips, the source doc cuts Mistral match confirmation first, then resolution notices, then agency aggregation. Record any cut clearly; removing confirmation means the same-category different-object guarantee no longer holds. Preserve classification, geo matching, and threshold escalation.
 
 Before handing off, report what changed, which checks ran, any external access limitations, and any remaining mock behavior. Keep README commands synchronized with the actual project; do not claim tests passed without running them.
+
+## Integrated application extension (user-authorized)
+
+The full website request supersedes the earlier ownership/MVP limits. website.py is the shared Flask entrypoint; templates/ and static/ are its responsive UI. app.py, data/, notebooks/, ui_server.py, and web/ remain preserved research/tools. store.py owns SQLite accounts, issue documents, reports, events, activities, participants, contribution evidence references, reviews, ledger, settings, and unique issue/reporter notices. es_store.py owns safe_issues search projection; pipeline.py retains submit_report and resolve public signatures and adds submit(..., key, photo) for structured web results and idempotency. Reporter arguments are registered user IDs. The create_issue compatibility function creates one distinct issue with its first report; add_report appends to an open issue; orchestration should use pipeline.submit to enforce threshold drafts. mark_escalated generates a draft and mark_resolved generates notices, rather than bypassing workflow invariants.
+
+The original requirement for atomic Elasticsearch increments is superseded by authoritative SQLite BEGIN IMMEDIATE transactions with an Elasticsearch search projection. This is an intentional storage contract extension: every retrieval synchronizes committed dirty projections before matching; no silent backend failover is allowed. safe_issues avoids overwriting existing team indexes. See DEPLOYMENT.md for operations and the single-host limitation.
+
+Reviewers are administrator accounts granted through the operator CLI. Self-review is rejected. Pending uploads earn no points. Initial configurable reward is 50 points per approved contribution; each review transition records an auditable ledger delta, including reversal. Explicit resolution remains separate from contribution approval. No AI photo verification or external delivery is implemented. Community activities and completion claims are currently restricted to nonresolved illegal_dumping cleanup issues; the UI directs hazardous material and professional work to qualified organizations.
+
+New environment variables: SAFE_SECRET_KEY, SAFE_ENV, SAFE_STORAGE, SAFE_DB, SAFE_SEARCH_BACKEND, ES_URL, ES_API_KEY. Existing Mistral variables remain unchanged. Never commit instance/, uploads, SQLite files, or secret env files. Use requirements-web.txt for this app rather than the preserved research requirements.txt. Run the journey suite before lifecycle changes, including permissions, retries, reversal, and report ten/eleven. Current evidence is recorded in DEPLOYMENT.md; tests use mocked providers and do not prove live model or Elasticsearch service quality.
